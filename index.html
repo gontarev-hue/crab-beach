@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
+    <title>Crab Beach</title>
+    <style>
+      html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #2aa6cf; touch-action: none; }
+      /* The game is portrait (1080x2338): the canvas keeps that shape as large as the window allows, and fills a phone screen. */
+      #unity-canvas { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: block; background: #2aa6cf; outline: none; }
+      #loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+        font: 600 20px/1.2 system-ui, -apple-system, "Segoe UI", sans-serif; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,.25); }
+      #bar { width: min(70vw, 320px); height: 14px; border-radius: 7px; background: rgba(255,255,255,.35); overflow: hidden; }
+      #fill { width: 0; height: 100%; border-radius: 7px; background: #70db05; transition: width .2s; }
+    </style>
+  </head>
+  <body>
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <div id="loading"><div>Crab Beach</div><div id="bar"><div id="fill"></div></div></div>
+    <script src="Build/WebGL.loader.js"></script>
+    <script>
+      var canvas = document.querySelector("#unity-canvas"), aspect = 1080 / 2338;
+      function fit() {
+        var w = window.innerWidth, h = window.innerHeight;
+        // Phones in portrait are about the game's shape: fill them. Anything wider shows the game as a tall card in the middle.
+        var fill = w / h <= aspect * 1.15;
+        var cw = fill ? w : Math.min(w, h * aspect), ch = fill ? h : cw / aspect;
+        canvas.style.width = cw + "px"; canvas.style.height = ch + "px";
+      }
+      window.addEventListener("resize", fit); fit();
+      createUnityInstance(canvas, {
+        arguments: [],
+        dataUrl: "Build/WebGL.data.unityweb",
+        frameworkUrl: "Build/WebGL.framework.js.unityweb",
+        codeUrl: "Build/WebGL.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Crab Beach",
+        productVersion: "0.1.0",
+        // Sharp on phones without rendering at 3-4x their CSS size.
+        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+      }, function (progress) {
+        document.querySelector("#fill").style.width = Math.round(progress * 100) + "%";
+      }).then(function () {
+        document.querySelector("#loading").remove();
+      }).catch(function (message) {
+        alert(message);
+      });
+    </script>
+  </body>
+</html>
