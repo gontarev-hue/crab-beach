@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "874184398413",
+    "project_id": "crab-beach",
+    "storage_bucket": "crab-beach.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874184398413:android:eb89bf46bf6d9b87c5ae04",
+        "android_client_info": {
+          "package_name": "com.crabincremancer.crabbeach"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUv2Pu0q50TFHPZz4_1KFBBBrG_29dw1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
